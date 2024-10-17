@@ -3,7 +3,7 @@ from flask_cors import CORS
 import mysql.connector
 import os
 
-app = Flask(__name__)
+app = Flask(name)
 CORS(app)
 
 db = mysql.connector.connect(
@@ -43,5 +43,5 @@ def delete_todo(id):
     except Exception as e:
         return jsonify({'error': 'Error deleting todo'}), 500
 
-if __name__ == '__main__':
+if name == 'main':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 3000)))
