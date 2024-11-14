@@ -17,7 +17,7 @@ The `docker-compose.yml` file passes the parameters needed for this containerize
 ```
 services:
   frontend:
-    build: ./frontend
+    build: ./presentation_tier
     ports:
       - "3000:3000"
     environment:
@@ -26,7 +26,7 @@ services:
       - backend
 
   backend:
-    build: ./backend_flask
+    build: ./application_tier_flask
     ports:
       - "3001:3000"
     environment:

@@ -1,7 +1,7 @@
 version: '3'
 services:
   frontend:
-    build: ./frontend
+    build: ./presentation_tier
     ports:
       - "3000:3000"
     environment:
@@ -10,7 +10,7 @@ services:
       - backend
 
   backend:
-    build: ./backend_flask
+    build: ./application_tier_flask
     ports:
       - "3001:3000"
     environment:
