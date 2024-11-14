@@ -38,3 +38,7 @@ services:
 
 ## Environment Configuration
 `env.sample` is a sample environment file. Rename it to `.env` with the correct parameters for the RDS instance and you can utilize this. This assumes your RDS is publicly accessible using your IP address.
+
+
+## To Build locallly
+docker-compose up
