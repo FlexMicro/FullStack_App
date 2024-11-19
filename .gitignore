@@ -3,6 +3,9 @@
 *.env
 .env.*
 
+venv/
+**venv/
+
 # React
 **/node_modules/
 **/build/
