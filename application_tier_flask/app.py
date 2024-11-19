@@ -6,6 +6,18 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+# Initialize DynamoDB client
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+table = dynamodb.Table('mytest')
+
+# Initialize S3 client
+s3 = boto3.client('s3')
+S3_BUCKET = 'bymyckei3283'  # Replace with your S3 bucket name
+
+@app.route('/health')
+def health_check():
+    return "Healthy!"
+
 def init_database():
     try:
         # First connect without specifying a database
@@ -69,6 +81,28 @@ def delete_todo(id):
         cursor.execute('DELETE FROM todos WHERE id = %s', (id,))
         db.commit()
         return jsonify({'message': 'Todo deleted successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    # Generate a unique filename
+    filename = str(uuid4()) + os.path.splitext(file.filename)[1]
+
+    try:
+        # Upload file to S3
+        s3.upload_fileobj(file, S3_BUCKET, filename)
+        file_url = f"https://{S3_BUCKET}.s3.amazonaws.com/{filename}"
+        return jsonify({'file_url': file_url}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
