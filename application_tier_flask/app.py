@@ -105,7 +105,7 @@ def upload_file():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('api/health')
+@app.route('/api/health')
 def health_check():
     return "Healthy!"
 
