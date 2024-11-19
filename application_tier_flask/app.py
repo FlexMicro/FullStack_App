@@ -16,10 +16,6 @@ table = dynamodb.Table('mytest')
 s3 = boto3.client('s3')
 S3_BUCKET = 'bymyckei3283'  # Replace with your S3 bucket name
 
-@app.route('/health')
-def health_check():
-    return "Healthy!"
-
 def init_database():
     try:
         # First connect without specifying a database
@@ -86,7 +82,6 @@ def delete_todo(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -107,6 +102,10 @@ def upload_file():
         return jsonify({'file_url': file_url}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/health')
+def health_check():
+    return "Healthy!"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 3000)))
