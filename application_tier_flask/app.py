@@ -10,11 +10,13 @@ CORS(app)
 
 # Initialize DynamoDB client
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
-table = dynamodb.Table('mytest')
+table = os.environ.get('DYNAMODB_TABLE')
+# table = dynamodb.Table('mytest')
 
 # Initialize S3 client
 s3 = boto3.client('s3')
-S3_BUCKET = 'bymyckei3283'  # Replace with your S3 bucket name
+S3_BUCKET = os.environ.get('S3_BUCKET')
+# S3_BUCKET = 'bymyckei3283'  # Replace with your S3 bucket name
 
 def init_database():
     try:
@@ -103,7 +105,7 @@ def upload_file():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/health')
+@app.route('api/health')
 def health_check():
     return "Healthy!"
 
