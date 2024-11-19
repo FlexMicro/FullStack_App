@@ -82,7 +82,7 @@ def delete_todo(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/upload', methods=['POST'])
+@app.route('/api/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
